@@ -10,7 +10,6 @@ interface IAuth {
 export async function loginFn({ email, password }: IAuth) {
   console.log('log: auth', email, password);
 
-  return;
   const res = await axiosInstance.post('/auth/login', { email, password });
   return res.data;
 }

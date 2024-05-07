@@ -34,7 +34,7 @@ export default function Login() {
       if (data?.user) {
         console.log('log: data', data);
 
-        await login(data.user.token, data.user);
+        await login(data.user.token);
         navigate('/dashboard');
         console.log('log: data', data.user);
       } else {
@@ -72,16 +72,25 @@ export default function Login() {
 
   const mutation = useMutation({
     mutationFn: loginFn,
-  });
-
-  const { values, handleChange, handleSubmit } = useFormik({
-    initialValues: { email: '', password: '' },
-    onSubmit: async (values) => {
-      console.log('log: ', values);
-
-      mutation.mutate(values);
+    onSuccess: (values) => {
+      setSubmitting(false);
+      console.log('log: success', values);
+      login(values?.data?.token);
+    },
+    onError: (error) => {
+      setSubmitting(false);
     },
   });
+
+  const { values, handleChange, handleSubmit, isSubmitting, setSubmitting } =
+    useFormik({
+      initialValues: { email: '', password: '' },
+      onSubmit: async (values, { setSubmitting }) => {
+        console.log('log: ', values);
+
+        mutation.mutate(values);
+      },
+    });
 
   return (
     <>
