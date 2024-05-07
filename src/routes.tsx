@@ -1,8 +1,8 @@
-import { Navigate, Outlet, useRoutes } from "react-router-dom";
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 
-import AuthGuard from "./guards/AuthGuard";
-import GuestGuard from "./guards/GuestGuard";
-import { ElementType, Suspense, lazy } from "react";
+import AuthGuard from './guards/AuthGuard';
+import GuestGuard from './guards/GuestGuard';
+import { ElementType, Suspense, lazy } from 'react';
 
 const Loadable = (Component: ElementType) => (props: any) => {
   return (
@@ -15,18 +15,10 @@ const Loadable = (Component: ElementType) => (props: any) => {
 export default function Routes() {
   return useRoutes([
     {
-      path: "/",
+      path: 'auth',
       children: [
         {
-          path: "",
-          element: (
-            <>
-              <Home />
-            </>
-          ),
-        },
-        {
-          path: "/login",
+          path: 'login',
           element: (
             <GuestGuard>
               <Login />
@@ -37,7 +29,7 @@ export default function Routes() {
     },
 
     {
-      path: "dashboard",
+      path: '',
       element: (
         <AuthGuard>
           <Outlet />
@@ -45,11 +37,11 @@ export default function Routes() {
       ),
       children: [
         {
-          element: <Navigate to={"/dashboard/user"} replace />,
+          element: <Navigate to={'/user'} replace />,
           index: true,
         },
         {
-          path: "user",
+          path: 'user',
           element: (
             <>
               <User />
@@ -61,6 +53,6 @@ export default function Routes() {
   ]);
 }
 
-const Home = Loadable(lazy(() => import("./pages/home")));
-const User = Loadable(lazy(() => import("./pages/user")));
-const Login = Loadable(lazy(() => import("./pages/login")));
+const Home = Loadable(lazy(() => import('./pages/home')));
+const User = Loadable(lazy(() => import('./pages/user')));
+const Login = Loadable(lazy(() => import('./pages/login')));
