@@ -4,8 +4,6 @@ import { socket } from '../utils/socket';
 export default function User() {
   const { user } = useAuth();
 
-  console.log('log: user', user);
-
   function sendMessage() {
     socket.emit('chat:create', { ...user });
   }
