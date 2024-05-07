@@ -43,7 +43,6 @@ export function AuthProvider({ children }: IProps) {
         setIsAuthenticated(true);
         setUser(user?.data);
         setIsLoading(false);
-        console.log('log: token', token);
       }
     }
 
