@@ -1,9 +1,16 @@
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
-import Home from "./pages/home";
-import User from "./pages/user";
-import Login from "./pages/login";
+
 import AuthGuard from "./guards/AuthGuard";
 import GuestGuard from "./guards/GuestGuard";
+import { ElementType, Suspense, lazy } from "react";
+
+const Loadable = (Component: ElementType) => (props: any) => {
+  return (
+    <Suspense fallback={<>Loading...</>}>
+      <Component {...props} />
+    </Suspense>
+  );
+};
 
 export default function Routes() {
   return useRoutes([
@@ -53,3 +60,7 @@ export default function Routes() {
     },
   ]);
 }
+
+const Home = Loadable(lazy(() => import("./pages/home")));
+const User = Loadable(lazy(() => import("./pages/user")));
+const Login = Loadable(lazy(() => import("./pages/login")));

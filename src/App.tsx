@@ -6,11 +6,9 @@ import { AuthProvider } from "./context/auth.context";
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </div>
   );
 }
